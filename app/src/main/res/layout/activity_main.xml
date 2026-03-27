@@ -1,110 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#0F1115"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <!-- Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fruit Disease Detector"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_gravity="center"
-            android:padding="10dp" />
-
-        <!-- Card -->
-        <androidx.cardview.widget.CardView
+        <!-- HEADER -->
+        <LinearLayout
+            android:background="#1B5E20"
+            android:padding="16dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="10dp">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:text="Fruit Disease AI"
+                android:textColor="#A5D6A7"
+                android:textSize="14sp"/>
 
-                <!-- Image Preview -->
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:background="#EEEEEE"
-                    android:src="@drawable/ic_launcher_background" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Detect and Diagnose"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="22sp"/>
+        </LinearLayout>
 
-                <!-- Spinner -->
-                <Spinner
-                    android:id="@+id/spinnerFruit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp" />
+        <!-- FRUIT BUTTONS -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-                <!-- Camera Button -->
-                <Button
-                    android:id="@+id/btnCamera"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Capture Image"
-                    android:textColor="#FFFFFF"
-                    android:background="@drawable/btn_style"
-                    android:layout_marginTop="10dp" />
+            <Button
+                android:id="@+id/btnApple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="🍎 Apple"
+                android:backgroundTint="#2E7D32"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1"/>
 
-                <!-- Gallery Button -->
-                <Button
-                    android:id="@+id/btnGallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Upload from Gallery"
-                    android:textColor="#FFFFFF"
-                    android:background="@drawable/btn_style"
-                    android:layout_marginTop="10dp" />
+            <Button
+                android:id="@+id/btnOrange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="🍊 Orange"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"/>
 
-                <!-- Predict Button -->
-                <Button
-                    android:id="@+id/btnPredict"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Detect Disease"
-                    android:textColor="#FFFFFF"
-                    android:background="@drawable/btn_style"
-                    android:layout_marginTop="15dp" />
+            <Button
+                android:id="@+id/btnMango"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="🥭 Mango"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
-                <!-- Progress Bar -->
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:layout_marginTop="15dp" />
+        <!-- IMAGE UPLOAD BOX -->
+        <FrameLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#1E1E1E">
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
 
-        <!-- Result -->
-        <TextView
-            android:id="@+id/txtResult"
+            <TextView
+                android:id="@+id/txtPlaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📷 Tap to add image"
+                android:textColor="#888"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <!-- BUTTONS -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnCamera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="📷 Camera"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btnGallery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="🖼 Gallery"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <!-- MODEL STATUS -->
+        <LinearLayout
+            android:background="#1E1E1E"
+            android:padding="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Model loaded: Apple CNN"
+                android:textColor="#4CAF50"/>
+        </LinearLayout>
+
+        <!-- PREDICT BUTTON -->
+        <Button
+            android:id="@+id/btnPredict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Result will appear here"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:text="Predict Disease →"
             android:layout_marginTop="20dp"
-            android:gravity="center" />
+            android:backgroundTint="#2E7D32"
+            android:textColor="#FFFFFF"/>
 
     </LinearLayout>
 
