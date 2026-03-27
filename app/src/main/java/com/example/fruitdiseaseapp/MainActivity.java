@@ -1,16 +1,18 @@
 package com.example.fruitdiseaseapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.*;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,47 +20,69 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
+    TextView txtPlaceholder;
     Button btnCamera, btnGallery, btnPredict;
-    Spinner spinner;
-    ProgressBar progressBar;
+    Button btnApple, btnOrange, btnMango;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int PICK_IMAGE = 2;
 
     Bitmap selectedBitmap = null;
+    String selectedFruit = "Apple";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        spinner = findViewById(R.id.spinnerFruit);
         imageView = findViewById(R.id.imageView);
+        txtPlaceholder = findViewById(R.id.txtPlaceholder);
         btnCamera = findViewById(R.id.btnCamera);
         btnGallery = findViewById(R.id.btnGallery);
         btnPredict = findViewById(R.id.btnPredict);
-        progressBar = findViewById(R.id.progressBar);
 
-        // Spinner data
-        String[] fruits = {"Apple", "Banana", "Mango", "Orange"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, fruits);
-        spinner.setAdapter(adapter);
+        btnApple = findViewById(R.id.btnApple);
+        btnOrange = findViewById(R.id.btnOrange);
+        btnMango = findViewById(R.id.btnMango);
 
-        // Camera
+        // CAMERA PERMISSION FIX 🔥
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA}, 100);
+        }
+
+        // FRUIT SELECTION
+        btnApple.setOnClickListener(v -> {
+            selectedFruit = "Apple";
+            selectFruit(btnApple);
+        });
+
+        btnOrange.setOnClickListener(v -> {
+            selectedFruit = "Orange";
+            selectFruit(btnOrange);
+        });
+
+        btnMango.setOnClickListener(v -> {
+            selectedFruit = "Mango";
+            selectFruit(btnMango);
+        });
+
+        // CAMERA
         btnCamera.setOnClickListener(v -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         });
 
-        // Gallery
+        // GALLERY
         btnGallery.setOnClickListener(v -> {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+            Intent intent = new Intent(Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, PICK_IMAGE);
+            startActivityForResult(intent, PICK_IMAGE);
         });
 
-        // Predict
+        // PREDICT
         btnPredict.setOnClickListener(v -> {
 
             if (selectedBitmap == null) {
@@ -66,43 +90,32 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            progressBar.setVisibility(View.VISIBLE);
-            btnPredict.setEnabled(false);
+            String disease = "Healthy";
+            float confidence = 97.3f;
 
-            new Handler().postDelayed(() -> {
+            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
 
-                progressBar.setVisibility(View.GONE);
-                btnPredict.setEnabled(true);
+            // SEND IMAGE
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
 
-                String fruit = spinner.getSelectedItem().toString();
+            intent.putExtra("image", byteArray);
+            intent.putExtra("fruit", selectedFruit);
+            intent.putExtra("disease", disease);
+            intent.putExtra("confidence", confidence);
 
-                // Fake prediction (replace with model later)
-                String disease = "Healthy";
-                float confidence = 98.0f;
-
-                // Convert image → byte[]
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-
-                // Send data
-                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                intent.putExtra("image", byteArray);
-                intent.putExtra("fruit", fruit);
-                intent.putExtra("disease", disease);
-                intent.putExtra("confidence", confidence);
-
-                startActivity(intent);
-
-            }, 1500);
+            startActivity(intent);
         });
     }
 
+    // HANDLE IMAGE RESULT
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && data != null) {
+
             try {
                 if (requestCode == REQUEST_IMAGE_CAPTURE) {
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
@@ -117,10 +130,21 @@ public class MainActivity extends AppCompatActivity {
                     imageView.setImageBitmap(bitmap);
                 }
 
+                txtPlaceholder.setVisibility(TextView.GONE);
+
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    // BUTTON HIGHLIGHT
+    private void selectFruit(Button selectedBtn) {
+
+        btnApple.setBackgroundTintList(getColorStateList(android.R.color.darker_gray));
+        btnOrange.setBackgroundTintList(getColorStateList(android.R.color.darker_gray));
+        btnMango.setBackgroundTintList(getColorStateList(android.R.color.darker_gray));
+
+        selectedBtn.setBackgroundTintList(getColorStateList(android.R.color.holo_green_dark));
     }
 }
