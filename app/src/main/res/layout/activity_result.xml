@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F8E9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Analysis Result"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:gravity="center"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvResultTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#1B5E20"
+            android:gravity="center"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvConfidence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvResultSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#444444"
+            android:gravity="center"
+            android:paddingBottom="20dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutDiseaseInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvDiseaseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#C62828"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cause"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#1B5E20"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvCause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:paddingBottom="16dp"
+                android:lineSpacingExtra="3dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precaution"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#1B5E20"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvPrecaution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:lineSpacingExtra="3dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Scan Another Leaf"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#388E3C"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</ScrollView>
